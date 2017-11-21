@@ -1,0 +1,65 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+
+<body class="login">
+<div>
+    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
+
+    <div class="login_wrapper">
+
+        <div class="animate form login_form">
+
+
+            <section class="login_content">
+                <h3 >Sistema Transaccional Diasa S.A de C.V </h3>
+
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+
+                    <h4>Iniciar sesión</h4>
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+
+                    <label for="username">{{ 'security.login.username'|trans }}</label>
+                    <input type="text" placeholder="Nombre de usuario" class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" />
+
+                    <label for="password">{{ 'security.login.password'|trans }}</label>
+                    <input type="password" class="form-control" placeholder="Contraseña" id="password" name="_password" required="required" />
+
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label  for="remember_me" name="remember_me" >{{ 'security.login.remember_me'|trans }}</label>
+
+
+                    <input class="btn btn-primary col-lg-4 " type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
+                    <div class="clearfix"></div>
+                    <br />
+
+                    <div class="separator">
+                        <p class="change_link">
+                            <a href="/resetting/request" class="to_register">¿Olvidaste tu contraseña? </a>
+                        </p>
+
+                        </div>
+                </form>
+                {% if error %}
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert">×</a>
+                        <strong>Error!</strong> {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+            </section>
+        </div>
+
+
+    </div>
+</div>
+</body>
+
+
+
+
+

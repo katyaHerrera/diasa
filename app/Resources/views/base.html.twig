@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block title %}<title>Diasa </title>{% endblock %}
+{% block stylesheets %}
+        <!-- Bootstrap -->
+        <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="{{ asset('vendor/nprogress/nprogress.css') }}" rel="stylesheet">
+        <!-- iCheck -->
+        <link href="{{ asset('vendor/iCheck/skins/flat/green.css') }}" rel="stylesheet">
+        <!-- bootstrap-wysiwyg -->
+        <link href="{{ asset('vendor/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
+        <!-- Select2 -->
+        <link href="{{ asset('vendor/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+        <!-- Switchery -->
+        <link href="{{ asset('vendor/switchery/dist/switchery.min.css') }}" rel="stylesheet">
+        <!-- starrr -->
+        <link href="{{ asset('vendor/starrr/dist/starrr.css') }}" rel="stylesheet">
+        <!-- bootstrap-daterangepicker -->
+        <link href="{{ asset('vendor/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+
+        <!-- Custom Theme Style -->
+        <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+    {% endblock stylesheets %}
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title"><i class="fa fa-tint"></i> <span>Diasa</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div class="profile clearfix">
+
+                    <div class="profile_info">
+                        <span>Bienvenido</span>
+                        <h2></h2>
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br />
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3>General</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="/"><i class="fa fa-home"></i> Home </a>
+
+                            </li>
+
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+
+                                <li><a><i class="fa fa-user"></i>Usuarios <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{ path ('fos_user_registration_register') }}"> Crear usuario</a></li>
+                                    <li><a href="{{ path('show_users') }}"> Lista de usuarios</a></li>
+
+                                </ul>
+                            </li>
+
+                                <li><a href="/respaldo-DB"><i class="fa fa-database"></i>Base de datos</a>
+
+                                </li>
+
+                            {% endif %}
+
+                            {% if( is_granted('ROLE_STRATEGIC')  )  %}
+                            <li><a><i class="fa fa-line-chart"></i> Estrategico<span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="/reportes-estrategicos/eficiencia-global-comercial">Eficiencia Global y comercial</a></li>
+                                    <li><a href="/reportes-estrategicos/indicador-rentabilidad">Rentabilidad</a></li>
+                                    <li><a href="/reportes-estrategicos/cont-servicio">Continuidad del servicio</a></li>
+                                    <li><a href="/reportes-estrategicos/cob-micromedicion">Cobertura de micromedición</a></li>
+                                    <li><a href="/reportes-estrategicos/resp-reclamos">Tiempo de respuesta a reclamos</a></li>
+                                </ul>
+                            </li>
+                            {% endif %}
+
+                            {% if ( is_granted('ROLE_TACTICO')  ) %}
+                                <li><a><i class="fa fa-bar-chart"></i>Tactico<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/reportes-tacticos/consumo-agua">Consumo de Agua por rango de tarifa</a></li>
+                                        <li><a href="/reportes-tacticos/eficiencia-fisica">Eficiencia fisica</a></li>
+                                        <li><a href="/reportes-tacticos/indicador-energetico">Indicador energético</a></li>
+                                        <li><a href="/reportes-tacticos/dotacion-habitante">Dotación de agua disponible por habitante</a></li>
+                                        <li><a href="/reportes-tacticos/acometidas-activas">Acometidas activas</a></li>
+                                        <li><a href="/reportes-tacticos/mayor-consumo">Clientes con mayor consumo</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+
+                        </ul>
+                    </div>
+                    <div class="menu_section">
+
+                        <ul class="nav side-menu">
+                            <li><a><i class="glyphicon glyphicon-cog"></i> Configuración <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="/profile/edit">Editar perfil</a></li>
+                                    <li><a href="/profile/change-password">Cambiar contraseña</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- /menu footer buttons -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                <span class=" fa fa-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                <li><a href="/profile/"> Perfil</a></li>
+                                <li><a href="/profile/edit"> Configuración</a></li>
+                                <li><a  href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out pull-right"></i>Salir</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li role="presentation" class="dropdown">
+                           <!-- <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="badge bg-green">6</span>
+                            </a>-->
+                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="text-center">
+                                        <a>
+                                            <strong>See All Alerts</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        {% block namePageTitle %}<h3></h3>{% endblock %}
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        {% block x_panel %}
+
+                        {% endblock x_panel %}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        {% block footer %}
+           
+        {% endblock %}
+        <!-- /footer content -->
+    </div>
+</div>
+</body>
+
+{% block javascript %}
+    <!-- jQuery -->
+    <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- FastClick -->
+    <script src="{{ asset('vendor/fastclick/lib/fastclick.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ asset('vendor/nprogress/nprogress.js') }}"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="{{ asset('vendor/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+    <!-- iCheck -->
+    <script src="{{ asset('vendor/iCheck/icheck.min.js') }}"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="{{ asset('vendor/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="{{ asset('vendor/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery.hotkeys/jquery.hotkeys.js') }}"></script>
+    <script src="{{ asset('vendor/google-code-prettify/src/prettify.js') }}"></script>
+    <!-- jQuery Tags Input -->
+    <script src="{{ asset('vendor/jquery.tagsinput/src/jquery.tagsinput.js') }}"></script>
+    <!-- Switchery -->
+    <script src="{{ asset('vendor/switchery/dist/switchery.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('vendor/select2/dist/js/select2.full.min.js') }}"></script>
+    <!-- Parsley -->
+    <script src="{{ asset('vendor/parsleyjs/dist/parsley.min.js') }}"></script>
+    <!-- Autosize -->
+    <script src="{{ asset('vendor/autosize/dist/autosize.min.js') }}"></script>
+    <!-- jQuery autocomplete -->
+    <script src="{{ asset('vendor/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>
+    <!-- starrr -->
+    <script src="{{ asset('vendor/starrr/dist/starrr.js') }}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('build/js/custom.min.js') }}"></script>
+{% endblock javascript %}
+
+
+</html>

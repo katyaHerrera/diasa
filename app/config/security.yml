@@ -1,0 +1,53 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_STRATEGIC:   ROLE_STRATEGIC
+        ROLE_TACTICO:     ROLE_TACTICO
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                #csrf_token_generator: security.csrf.token_manager
+                require_previous_session: false
+            logout:       true
+            anonymous:    true
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 3600
+                # if you are using Symfony < 2.8, use the following config instead:
+                # csrf_provider: form.csrf_provider
+
+
+
+    access_control:
+        #paginas de acceso para el publico
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #paginas de acceso para todos lo usuarios
+        - { path: ^/$, role: ROLE_USER }
+        #paginas de acceso para el super administrador
+        - { path: ^/register, role: ROLE_SUPER_ADMIN }
+        - { path: ^/users, role:  ROLE_SUPER_ADMIN }
+        #paginas de acceso para el rol estrategico
+        - {path: ^/reportes-estrategicos, role: ROLE_STRATEGIC }
+        - {path: ^/eficiencia-global-comercial, role: ROLE_STRATEGIC }
+        - {path: ^/indicador-rentabilidad, role: ROLE_STRATEGIC }
+        - {path: ^/cont-servicio, role: ROLE_STRATEGIC }
+        - {path: ^/cob-micromedicion, role: ROLE_STRATEGIC }
+        - {path: ^/resp-reclamos, role: ROLE_STRATEGIC }
+        #paginas de acceso para el rol tactico
+        - {path: ^/reportes-tacticos, role: ROLE_TACTICO }
+        - {path: ^/consumo-agua, role: ROLE_TACTICO }
+        - {path: ^/eficiencia-fisica, role: ROLE_TACTICO }
+        - {path: ^/indicador-energetico, role: ROLE_TACTICO }
+        - {path: ^/dotacion-habitante, role: ROLE_TACTICO }
+        - {path: ^/acometidas-activas, role: ROLE_TACTICO }
+        - {path: ^/mayor-consumo, role: ROLE_TACTICO }
