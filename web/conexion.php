@@ -4,7 +4,7 @@ error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR);
 $servername='localhost';//localhost
 $dbusername='root';//root
 $dbpassword=null;//tupass
-$dbname='sigmadretierra';//tuclave
+$dbname='diasa';//tuclave
 connecttodb($servername,$dbname,$dbusername,$dbpassword);
 function connecttodb($servername,$dbname,$dbusername,$dbpassword)
 {

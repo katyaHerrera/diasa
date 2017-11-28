@@ -4,7 +4,7 @@ $fechaDeLaCopia = "-ALV".date("d-l-F-Y");
 $ficheroDeLaCopia =$dbname.$fechaDeLaCopia.".sql";
 $sistema="show variables where variable_name= 'basedir'";
 $restore=mysqli_query($sistema);
-$DirBase="C:/xampp/mysql/bin/mysqldump";
+$DirBase="C:/xampp2/mysql/bin/mysqldump";
 
 
 

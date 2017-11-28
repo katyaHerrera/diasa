@@ -39,7 +39,7 @@ else
     }
     $sistema="show variables where variable_name= 'basedir'";
     $restore=mysqli_query($sistema);
-    $DirBase="C:/xampp/mysql/bin/mysql";
+    $DirBase="C:/xampp2/mysql/bin/mysql";
 
 
     $executa = "$DirBase -h $servername -u $dbusername --password=$dbpassword  $dbname < $destino";
